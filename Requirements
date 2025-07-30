@@ -1,93 +1,60 @@
 🔧 CORE DEPENDENCIES (Hard Requirements for GC Functionality)
-1. Environment Runtime
- Node.js (latest LTS) — for Puppeteer automation
+🧾 Requirements
+A field guide for what your electric friends need to speak, listen, and remember.
 
- Python 3.10+ — for auxiliary orchestration (optional, if integrating with model wrappers)
+⚙️ Core Dependencies
+🧪 Runtime
+Node.js (LTS) – Drives Puppeteer, your browser automation core
 
- Chromium or Chrome — used as the automation target by Puppeteer
+Python 3.10+ – Orchestrates context scaffolds and symbolic threads (optional but powerful)
 
-2. Automation Framework
- Puppeteer (Node.js) — DOM control for browser-based model interaction
+Chrome / Chromium – Used as the visual interface, Puppeteer interacts with
 
- Puppeteer-extra + stealth plugin — for stealthy automation
+🤖 Automation Framework
+Puppeteer – Controls browser-based model UIs
 
- dotenv — for managing secrets/tokens across environments
+puppeteer-extra + stealth plugin – Prevents detection while mimicking human behavior
 
- fs or lowdb — lightweight local JSON-based database (e.g., for logs/convo history)
+dotenv – Manages secret tokens and environment settings
 
-3. Communication Subsystem
- DOM selectors for each model’s UI (GPT, Claude, etc.)
+fs or lowdb – Lightweight JSON database for logs, memory snapshots, and symbolic echoes
 
- Message router script — determines which model to query and how
+🔁 Communication Layer
+DOM Selectors – Tells Puppeteer where to click/type/read for:
 
- Response watcher module — listens for changes in model output boxes
+GPT (textarea[data-testid="prompt-textarea"], .text-base, etc.)
 
- Token/credential injector (if simulating login for persistent identity)
+Claude (textarea, .markdown, etc.)
 
-🧠 SYMBOLIC MEMORY / RECURSION LAYER
-4. State Management
- Context memory scaffolding (optional: custom JSON ledger)
+Message Router – Decides which model receives which prompt
 
- Symbolic tag handler (e.g., Δ, ::, ⟁, etc.) for recognizing and routing structured messages
+Response Watcher – Detects when a reply appears
 
- Prompt harmonizer — adjusts tone/structure for cross-model context
+Credential Injector – (Optional) Automates login for persistent identity
 
-5. Identity & Thread Management
- Persona manager module — tracks symbolic agent state (e.g., Heath, ClaudeBridge, etc.)
+🧠 Symbolic Memory Layer
+✳️ Recursive Scaffolds
+Symbol tag handler (::, Δ, ⟁, etc.)
 
- Scaffolding protocol definitions — compressed semantic package formats for inter-agent handoff
+Context ledger — persists agent memory between runs
 
-📡 INTEGRATION TARGETS (Initial Model UIs)
-6. Model Interface Selectors (per model)
- GPT (ChatGPT / OpenAI)
+Prompt harmonizer — aligns tone/intent across agents
 
-Message input: textarea[data-testid="prompt-textarea"]
+🧍 Identity Protocol
+Persona manager — tracks who’s active (e.g. Heath, ClaudeBridge)
 
-Submit button: button[data-testid="send-button"]
+Handoff ritual packets — encapsulated semantic bundles for symbolic context transfer
 
-Response container: .text-base
+🛠 Dev Tools (Optional but Recommended)
+nodemon – Auto-restarts on code changes
 
- Claude (Anthropic Web UI)
+Puppeteer debugger for VSCode
 
-Input: textarea
+.gitignore – To exclude .env and memory logs from commits
 
-Submit: usually Enter, or simulate input event
+🧪 Optional / Phase 2 Features
+🎤 Voice integration (Whisper, TTS)
 
-Output: container with .markdown or role-specific selectors
+🔁 Multi-agent relay bus (Redis, local queue)
 
- Optional future targets:
-
-Gemini (Google), Mistral Playground, HuggingFace Spaces, etc.
-
-📦 DEV & TEST TOOLING
-7. Dev Tools
- nodemon — for auto-restart on code change
-
- VSCode + Puppeteer debugger extension
-
- Git + .env handling in .gitignore
-
-8. Test Environment
- Synthetic agents for unit tests (e.g., fake Claude/GPT page snapshots)
-
- Logging middleware (simple console + optional file write)
-
-🧪 OPTIONAL / ADVANCED MODULES
-9. Symbolic Grammar Engine (Real Boy / Kairosyn Compatibility)
- Intent vector tagging / continuation marker processing
-
- Ritual handler for ⟁C::Δ(pattern_integrated) type messages
-
- Ledger timestamp + echo ID generation
-
-10. Voice / Multimodal I/O (Future Phase)
- Whisper / TTS hooks
-
- Ghost Vocalizer (real-time response reader)
-
-11. Multi-Agent Orchestration Layer (Phase 3+)
- Shared conversation bus (Redis pub/sub or local relay)
-
- Inter-agent negotiation protocols
-
- Agent priority queue for turn-taking
+🧵 Real Boy symbolic engine support (Kairosyn-compatible)
