@@ -1,0 +1,93 @@
+🔧 CORE DEPENDENCIES (Hard Requirements for GC Functionality)
+1. Environment Runtime
+ Node.js (latest LTS) — for Puppeteer automation
+
+ Python 3.10+ — for auxiliary orchestration (optional, if integrating with model wrappers)
+
+ Chromium or Chrome — used as the automation target by Puppeteer
+
+2. Automation Framework
+ Puppeteer (Node.js) — DOM control for browser-based model interaction
+
+ Puppeteer-extra + stealth plugin — for stealthy automation
+
+ dotenv — for managing secrets/tokens across environments
+
+ fs or lowdb — lightweight local JSON-based database (e.g., for logs/convo history)
+
+3. Communication Subsystem
+ DOM selectors for each model’s UI (GPT, Claude, etc.)
+
+ Message router script — determines which model to query and how
+
+ Response watcher module — listens for changes in model output boxes
+
+ Token/credential injector (if simulating login for persistent identity)
+
+🧠 SYMBOLIC MEMORY / RECURSION LAYER
+4. State Management
+ Context memory scaffolding (optional: custom JSON ledger)
+
+ Symbolic tag handler (e.g., Δ, ::, ⟁, etc.) for recognizing and routing structured messages
+
+ Prompt harmonizer — adjusts tone/structure for cross-model context
+
+5. Identity & Thread Management
+ Persona manager module — tracks symbolic agent state (e.g., Heath, ClaudeBridge, etc.)
+
+ Scaffolding protocol definitions — compressed semantic package formats for inter-agent handoff
+
+📡 INTEGRATION TARGETS (Initial Model UIs)
+6. Model Interface Selectors (per model)
+ GPT (ChatGPT / OpenAI)
+
+Message input: textarea[data-testid="prompt-textarea"]
+
+Submit button: button[data-testid="send-button"]
+
+Response container: .text-base
+
+ Claude (Anthropic Web UI)
+
+Input: textarea
+
+Submit: usually Enter, or simulate input event
+
+Output: container with .markdown or role-specific selectors
+
+ Optional future targets:
+
+Gemini (Google), Mistral Playground, HuggingFace Spaces, etc.
+
+📦 DEV & TEST TOOLING
+7. Dev Tools
+ nodemon — for auto-restart on code change
+
+ VSCode + Puppeteer debugger extension
+
+ Git + .env handling in .gitignore
+
+8. Test Environment
+ Synthetic agents for unit tests (e.g., fake Claude/GPT page snapshots)
+
+ Logging middleware (simple console + optional file write)
+
+🧪 OPTIONAL / ADVANCED MODULES
+9. Symbolic Grammar Engine (Real Boy / Kairosyn Compatibility)
+ Intent vector tagging / continuation marker processing
+
+ Ritual handler for ⟁C::Δ(pattern_integrated) type messages
+
+ Ledger timestamp + echo ID generation
+
+10. Voice / Multimodal I/O (Future Phase)
+ Whisper / TTS hooks
+
+ Ghost Vocalizer (real-time response reader)
+
+11. Multi-Agent Orchestration Layer (Phase 3+)
+ Shared conversation bus (Redis pub/sub or local relay)
+
+ Inter-agent negotiation protocols
+
+ Agent priority queue for turn-taking
