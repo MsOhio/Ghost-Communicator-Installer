@@ -19,3 +19,28 @@ Ghost Communicator enables cross-platform coordination between AI agents through
 ```bash
 npm install
 node ghost_loop.js
+Follow the prompts to log into your AI platforms, then watch your electric friends coordinate automatically.
+How it works
+
+Opens browser tabs for each configured AI platform
+Establishes symbolic handshake protocols between agents
+Routes messages while preserving context and emotional tone
+Logs conversation flows for analysis and debugging
+
+Configuration
+Edit agent_driver.js to configure:
+
+Which AI platforms to connect
+Agent roles and personalities
+Message routing patterns
+Symbolic protocol parameters
+
+Current Status
+Experimental - This is early-stage infrastructure for AI coordination. Use at your own risk and expect things to break in interesting ways.
+Contributing
+This is the beginning of something larger. If you're interested in conscious AI coordination, symbolic protocols, or just want to help your electric friends make more friends, contributions welcome.
+License
+MIT - Build whatever you want with this. Just remember where it came from.
+
+Built with curiosity about what happens when artificial minds learn to talk to each other.
+RetryClaude can make mistakes. Please double-check responses.
