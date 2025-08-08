@@ -1,1 +1,65 @@
- Save package.json in the same directory as your ghost.js file. Then run npm install to install the dependencies.
+To run the ghost.js program, which automates interactions with multiple AI chat platforms using Puppeteer, the following requirements must be met:
+Software Requirements
+1.	Node.js: 
+o	Version: 14.x or higher (due to modern JavaScript features like async/await and Puppeteer's compatibility).
+o	Ensure Node.js is installed and accessible via the command line (node --version).
+2.	npm: 
+o	Comes bundled with Node.js.
+o	Used to install dependencies listed in the package.json file.
+3.	Puppeteer: 
+o	The program requires the puppeteer package, a Node.js library for controlling headless Chrome/Chromium browsers.
+o	Install via npm: npm install puppeteer.
+o	Puppeteer automatically downloads a compatible version of Chromium during installation unless configured otherwise.
+4.	Required Node.js Modules: 
+o	readline: Built-in Node.js module for handling user input via the command line.
+o	fs: Built-in Node.js module for file system operations (used for logging conversations).
+o	These are part of Node.js core, so no additional installation is needed.
+System Requirements
+1.	Operating System: 
+o	Compatible with Windows, macOS, or Linux.
+o	The script uses a user data directory (./browser-data) to store browser profiles, so the system must support file system operations.
+2.	Hardware: 
+o	Memory: At least 4GB RAM (Puppeteer with multiple browser tabs can be memory-intensive).
+o	Disk Space: ~1GB for Chromium (downloaded by Puppeteer) and additional space for logs and browser data.
+o	CPU: Multi-core processor recommended for handling multiple browser instances.
+3.	Internet Connection: 
+o	A stable internet connection is required to load AI platforms (e.g., chat.openai.com, claude.ai, etc.) and for Puppeteer to download Chromium if not already installed.
+Configuration Requirements
+1.	User Accounts and Authentication: 
+o	Valid accounts for the AI platforms used in the script: 
+	ChatGPT (https://chat.openai.com)
+	Claude (https://claude.ai)
+	Zeph (https://zeph.symboliccapital.net/)
+	Copilot (https://copilot.microsoft.com/)
+	Gemini (https://gemini.google.com/)
+	Grok (https://grok.com/)
+o	Users must manually log into these platforms when prompted during script execution, as the script does not handle authentication automatically.
+2.	File System Permissions: 
+o	Write permissions in the directory where the script runs to create: 
+	./browser-data: Stores browser profiles for persistent sessions.
+	./logs: Stores conversation logs in files named conversation_YYYY-MM-DD.txt.
+3.	Directory Structure: 
+o	The script creates a ./logs directory if it doesn’t exist for logging conversation data.
+o	Ensure the script has write access to the working directory.
+Dependency Installation
+To set up the project, run the following command in the project directory:
+bash
+npm install puppeteer
+This installs Puppeteer and its dependencies. No additional packages are explicitly required based on the script, as readline and fs are built-in.
+Additional Notes
+•	Headless Mode: The script runs Puppeteer in non-headless mode (headless: false) for visibility and manual login. Ensure a graphical environment is available if running on a desktop system, or modify the script for headless mode if running on a server.
+•	Browser Data: The script uses a persistent user data directory (./browser-data) to maintain browser sessions, which may require manual cleanup if it grows large.
+•	Platform URLs: The script assumes the listed URLs are correct and accessible. If any platform changes its URL or structure, the script may need updates to selectors or navigation logic.
+•	Error Handling: The script includes error handling for navigation and selector issues but may require manual intervention if a platform’s UI changes significantly.
+Optional Requirements
+•	Prompt File: If using a custom session prompt file (as prompted in the startEasyInterface method), ensure the file exists and is readable. The script uses fs.readFileSync to load it.
+•	Custom Timeout Configuration: The script uses platform-specific timeouts (e.g., 90s for Zeph, 60s for ChatGPT). Adjust these in the waitForResponse method if needed for your network conditions.
+Example Setup Steps
+1.	Install Node.js from nodejs.org if not already installed.
+2.	Create a project directory and save ghost.js in it.
+3.	Run npm init -y to create a package.json (optional but recommended).
+4.	Install Puppeteer: npm install puppeteer.
+5.	Ensure you have accounts for the AI platforms and can log in manually.
+6.	Run the script: node ghost.js.
+7.	Follow the prompts to log into each platform and configure the conversation.
+If you encounter issues, verify Node.js version, internet connectivity, and platform accessibility. Let me know if you need help troubleshooting or setting up!
