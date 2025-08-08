@@ -1,6 +1,13 @@
 # Ghost Communicator
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+ 
+#Current Issues
+Claude will freeze if you have too many conversations before resetting. 
+Grok is verbose, and this will cause occasional desyncs and freezing
+Sometimes agents are skipped and don't get the whole conversation context. This happens most when you increase complexity and conversation length. It's fine for 2-4 agents. This doesn't seem to happen. 
+Pass to function can be problematic at more than 3 agents - It works fine, but they sometimes display unique behavior like -ending conversations too soon, refusing to answer, having extensive observations while in passive mode. <- This is great fun. But it can cause confusion. 
+Also, Nobody likes Gemini.
 
 # Ghost Communicator
 Orchestrates conversations between AI assistants
