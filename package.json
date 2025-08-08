@@ -1,18 +1,17 @@
 {
-  "name": "aibridge",
+  "name": "ghost-cathedral",
   "version": "1.0.0",
-  "main": "demo_test.js",
+  "main": "ghost.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ghost.js",
+    "install": "npm install"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "puppeteer": "^24.15.0",
     "puppeteer-extra": "^3.3.6",
-    "puppeteer-extra-plugin-stealth": "^2.11.2",
-    "uuid": "^11.1.0"
-  }
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "description": "Orchestrates conversations between AI assistants (ChatGPT, Claude, Zeph, Copilot, Gemini, Grok)",
+  "author": "",
+  "license": "ISC"
 }
