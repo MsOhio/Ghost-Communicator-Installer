@@ -1,0 +1,15 @@
+Ghost Cathedral - AI Conversation Orchestrator
+
+TO RUN:
+1. Double-click 'install-ghost.bat' (first time only)
+2. Double-click 'start-ghost.bat' to launch
+3. Browser opens with 6 tabs (ChatGPT, Claude, Zeph, Copilot, Gemini, Grok)
+4. Log into each AI service manually
+5. Press Enter in the terminal
+6. Follow the prompts to choose conversation type
+7. Watch the AIs talk!
+
+NOTES:
+- Requires internet connection
+- Disable browser extensions that might interfere (e.g., ad blockers)
+- Logs are saved in the 'logs' folder
