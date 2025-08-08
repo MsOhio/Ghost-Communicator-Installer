@@ -41,6 +41,57 @@ o	Write permissions in the directory where the script runs to create:
 3.	Directory Structure: 
 o	The script creates a ./logs directory if it doesn’t exist for logging conversation data.
 o	Ensure the script has write access to the working directory.
+Explicit Dependencies
+
+puppeteer:
+
+Purpose: Used to automate browser interactions, launching a Chromium browser, navigating to AI platform websites, and simulating user inputs.
+Installation: npm install puppeteer
+Note: Puppeteer automatically downloads a compatible version of Chromium during installation unless configured otherwise. This adds a significant disk space requirement (~1GB).
+
+
+readline:
+
+Purpose: Built-in Node.js module used to create an interactive command-line interface for user input (e.g., selecting conversation modes, entering messages).
+Installation: No installation needed; it’s part of Node.js core.
+
+
+fs (File System):
+
+Purpose: Built-in Node.js module used for logging conversation data to files in the ./logs directory.
+Installation: No installation needed; it’s part of Node.js core.
+
+
+
+Implicit Dependencies
+While not explicitly listed in require statements, the following are implied dependencies based on the environment and functionality:
+
+Node.js:
+
+Version: 14.x or higher (recommended due to modern JavaScript features like async/await and Puppeteer’s compatibility).
+Purpose: Provides the runtime environment for executing the JavaScript code.
+Installation: Download from nodejs.org.
+
+
+Chromium:
+
+Purpose: Puppeteer uses Chromium as the browser for automation. It’s bundled with Puppeteer by default.
+Note: If you configure Puppeteer to use an existing Chrome/Chromium installation, ensure it’s compatible (check Puppeteer’s documentation for supported versions).
+
+
+
+Dependency Installation
+To install the only external dependency, run:
+bashnpm install puppeteer
+Notes
+
+No Additional Packages: The script does not explicitly require other npm packages beyond puppeteer. All other dependencies (readline, fs) are part of Node.js core.
+Environment Dependencies: The script assumes a working Node.js environment and internet access to load AI platform websites (e.g., chat.openai.com, claude.ai, etc.).
+Optional Configuration: If you use a custom prompt file (as in startEasyInterface), the file must exist and be readable, but this is not a dependency, just a user-provided resource.
+
+If you need help verifying or installing these dependencies, let me know!
+
+
 Dependency Installation
 To set up the project, run the following command in the project directory:
 bash
