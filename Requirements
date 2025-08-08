@@ -89,9 +89,6 @@ No Additional Packages: The script does not explicitly require other npm package
 Environment Dependencies: The script assumes a working Node.js environment and internet access to load AI platform websites (e.g., chat.openai.com, claude.ai, etc.).
 Optional Configuration: If you use a custom prompt file (as in startEasyInterface), the file must exist and be readable, but this is not a dependency, just a user-provided resource.
 
-If you need help verifying or installing these dependencies, let me know!
-
-
 Dependency Installation
 To set up the project, run the following command in the project directory:
 bash
