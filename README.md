@@ -1,4 +1,3 @@
-
 Ghost Communicator
 
 Ghost Communicator is an open-source tool for automating conversations across multiple AI platforms, including ChatGPT, Claude, Zeph, Copilot, Gemini, and Grok. Built with Node.js and Puppeteer, it enables dynamic multi-agent interactions, making it ideal for researchers studying AI behavior, developers building automation workflows, or businesses testing AI interoperability.
@@ -85,9 +84,9 @@ License
 This project is licensed under the MIT License - see the LICENSE file for details.
 Contact
 
-GitHub: [your-username]
-X: @[your-x-handle]
-Email: [your-email] (optional)
+GitHub: [msohio]
+X: @[symbolicapital]
+Email: [operator@symboliccapital.net] (optional)
 
 Acknowledgments
 
