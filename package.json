@@ -11,7 +11,7 @@
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2"
   },
-  "description": "Orchestrates conversations between AI assistants (ChatGPT, Claude, Zeph, Copilot, Gemini, Grok)",
+  "description": "Orchestrates conversations between AI assistants (ChatGPT, Claude, Zeph, Copilot, Gemini, Grok, AnythingLLM)",
   "author": "",
   "license": "ISC"
 }

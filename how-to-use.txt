@@ -1,10 +1,14 @@
 Ghost Cathedral - AI Conversation Orchestrator
 
+PREREQUISITES:
+- For AnythingLLM: Must be running locally at http://localhost:3001
+  (Install and start AnythingLLM separately - see https://anythingllm.com/)
+
 TO RUN:
 1. Double-click 'install-ghost.bat' (first time only)
 2. Double-click 'start-ghost.bat' to launch
-3. Browser opens with 6 tabs (ChatGPT, Claude, Zeph, Copilot, Gemini, Grok)
-4. Log into each AI service manually
+3. Browser opens with 7 tabs (ChatGPT, Claude, Zeph, Copilot, Gemini, Grok, AnythingLLM)
+4. Log into each AI service manually (AnythingLLM should be running at http://localhost:3001)
 5. Press Enter in the terminal
 6. Follow the prompts to choose conversation type
 7. Watch the AIs talk!
