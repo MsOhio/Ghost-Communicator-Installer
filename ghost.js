@@ -49,6 +49,7 @@ class GhostCommunicator {
         this.pages.copilot = await this.browser.newPage();
         this.pages.gemini = await this.browser.newPage();
         this.pages.grok = await this.browser.newPage();
+        this.pages.anythingllm = await this.browser.newPage();
 
         // Set user agent for all pages
         const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
@@ -67,7 +68,8 @@ class GhostCommunicator {
             zeph: 'https://zeph.symboliccapital.net/',
             copilot: 'https://copilot.microsoft.com/',
             gemini: 'https://gemini.google.com/',
-            grok: 'https://grok.com/'
+            grok: 'https://grok.com/',
+            anythingllm: 'http://localhost:3001'
         };
 
         for (const [name, url] of Object.entries(sites)) {
@@ -391,6 +393,57 @@ class GhostCommunicator {
         }
     }
 
+    async sendToAnythingLLM(message) {
+        console.log('Sending message to AnythingLLM...');
+        await this.pages.anythingllm.bringToFront();
+
+        const anythingllmSelectors = [
+            'textarea[placeholder*="Send a message"]',
+            'textarea[placeholder*="Message"]',
+            'textarea[id="message-input"]',
+            'textarea[name="message"]',
+            'textarea',
+            'div[contenteditable="true"]',
+            'input[type="text"]'
+        ];
+
+        let sent = false;
+        for (const selector of anythingllmSelectors) {
+            try {
+                await this.pages.anythingllm.waitForSelector(selector, { timeout: 2000 });
+                await this.pages.anythingllm.click(selector);
+                await this.pages.anythingllm.focus(selector);
+                
+                // Clear existing content
+                await this.pages.anythingllm.keyboard.down('Control');
+                await this.pages.anythingllm.keyboard.press('a');
+                await this.pages.anythingllm.keyboard.up('Control');
+                await this.pages.anythingllm.keyboard.press('Delete');
+                
+                // Copy to clipboard
+                await this.pages.anythingllm.evaluate(async (textToPaste) => {
+                    await navigator.clipboard.writeText(textToPaste);
+                }, message);
+
+                // Paste
+                await this.pages.anythingllm.keyboard.down('Control');
+                await this.pages.anythingllm.keyboard.press('v');
+                await this.pages.anythingllm.keyboard.up('Control');
+
+                await new Promise((r) => setTimeout(r, 500));
+                await this.pages.anythingllm.keyboard.press('Enter');
+                console.log(`✓ AnythingLLM message sent using selector: ${selector}`);
+                sent = true;
+                break;
+            } catch (err) {
+                continue;
+            }
+        }
+        if (!sent) {
+            console.log('AnythingLLM send failed: No input found');
+        }
+    }
+
     async waitForResponse(page, platform, previousText = '', customTimeout = null) {
         console.log(`Waiting for ${platform} response...`);
         await page.bringToFront();
@@ -416,6 +469,9 @@ class GhostCommunicator {
                     maxWait = 45000;
                     break;
                 case 'grok':
+                    maxWait = 60000;
+                    break;
+                case 'anythingllm':
                     maxWait = 60000;
                     break;
                 default:
@@ -510,6 +566,19 @@ class GhostCommunicator {
                 'pre',
                 'p'
             ];
+        } else if (platform === 'anythingllm') {
+            selectors = [
+                'div[data-role="assistant"]',
+                'div[class*="message"][class*="assistant"]',
+                'div[class*="ai-message"]',
+                'div[class*="response"]',
+                'div.markdown',
+                'div[class*="prose"]',
+                '.message-content',
+                'div[role="article"]',
+                'div[class*="chat-message"]:not([data-role="user"])',
+                'p'
+            ];
         }
 
         let lastText = '';
@@ -528,6 +597,7 @@ class GhostCommunicator {
             case 'gemini':
             case 'copilot':
             case 'grok':
+            case 'anythingllm':
                 stableThreshold = 2;
                 break;
             default:
@@ -689,6 +759,9 @@ class GhostCommunicator {
                 break;
             case 'grok':
                 await this.sendToGrok(message);
+                break;
+            case 'anythingllm':
+                await this.sendToAnythingLLM(message);
                 break;
             default:
                 console.log(`Unknown platform: ${platform}`);
@@ -1179,7 +1252,7 @@ Please respond with your thoughts, then optionally add "PASS TO [name]: [message
             output: process.stdout,
         });
 
-        const AGENTS = ['chatgpt', 'claude', 'zeph', 'copilot', 'gemini', 'grok'];
+        const AGENTS = ['chatgpt', 'claude', 'zeph', 'copilot', 'gemini', 'grok', 'anythingllm'];
         const MODES = ['duo', 'multi', 'everyone'];
         
         console.log('\n🎭 Ghost Communicator Easy Setup\n');
@@ -1190,7 +1263,7 @@ Please respond with your thoughts, then optionally add "PASS TO [name]: [message
             console.log('Conversation Modes:');
             console.log('1. Duo - Two agents ping-pong');
             console.log('2. Multi - 3+ agents with smart routing'); 
-            console.log('3. Everyone - All 6 agents broadcast');
+            console.log('3. Everyone - All 7 agents broadcast');
             const modeChoice = await ask('Select mode (1-3): ');
             const mode = MODES[parseInt(modeChoice) - 1] || 'duo';
 
@@ -1207,22 +1280,22 @@ Please respond with your thoughts, then optionally add "PASS TO [name]: [message
                 AGENTS.forEach((agent, i) => console.log(`${i + 1}. ${agent}`));
                 
                 if (mode === 'duo') {
-                    const agent1Input = await ask('Select first agent (1-6): ');
-                    const agent2Input = await ask('Select second agent (1-6): ');
+                    const agent1Input = await ask('Select first agent (1-7): ');
+                    const agent2Input = await ask('Select second agent (1-7): ');
                     const agent1Index = parseInt(agent1Input) - 1;
                     const agent2Index = parseInt(agent2Input) - 1;
                     
-                    if (agent1Index >= 0 && agent1Index < 6 && agent2Index >= 0 && agent2Index < 6 && agent1Index !== agent2Index) {
+                    if (agent1Index >= 0 && agent1Index < 7 && agent2Index >= 0 && agent2Index < 7 && agent1Index !== agent2Index) {
                         agents = [AGENTS[agent1Index], AGENTS[agent2Index]];
                     } else {
                         console.log('Invalid selection, using chatgpt + claude');
                         agents = ['chatgpt', 'claude'];
                     }
                 } else {
-                    const agentsInput = await ask('Select agents (comma-separated numbers, e.g. 1,2,3,4,5,6): ');
+                    const agentsInput = await ask('Select agents (comma-separated numbers, e.g. 1,2,3,4,5,6,7): ');
                     const selectedIndexes = agentsInput.split(',')
                         .map(s => parseInt(s.trim()) - 1)
-                        .filter(i => i >= 0 && i < 6);
+                        .filter(i => i >= 0 && i < 7);
                     
                     if (selectedIndexes.length >= 3) {
                         agents = selectedIndexes.map(i => AGENTS[i]);
@@ -1346,16 +1419,16 @@ Please respond with your thoughts, then optionally add "PASS TO [name]: [message
         });
 
         const ask = (question) => new Promise(resolve => rl.question(question, resolve));
-        const AGENTS = ['chatgpt', 'claude', 'zeph', 'copilot', 'gemini', 'grok'];
+        const AGENTS = ['chatgpt', 'claude', 'zeph', 'copilot', 'gemini', 'grok', 'anythingllm'];
 
         try {
             console.log('\n📤 Quick Message Interface\n');
             
             console.log('Available agents:');
             AGENTS.forEach((agent, i) => console.log(`${i + 1}. ${agent}`));
-            console.log('7. All agents');
+            console.log('8. All agents');
             
-            const targetChoice = await ask('Send to which agent(s)? (1-7): ');
+            const targetChoice = await ask('Send to which agent(s)? (1-8): ');
             
             if (!targetChoice || targetChoice.trim() === '') {
                 console.log('❌ No selection made');
@@ -1375,7 +1448,7 @@ Please respond with your thoughts, then optionally add "PASS TO [name]: [message
             
             rl.close();
             
-            if (targetChoice === '7') {
+            if (targetChoice === '8') {
                 await this.sendToMultiple(AGENTS, message);
                 console.log(`✅ Sent to all ${AGENTS.length} agents`);
             } else {
@@ -1413,14 +1486,14 @@ Please respond with your thoughts, then optionally add "PASS TO [name]: [message
             output: process.stdout,
         });
         console.log('\n=== Ghost Control Interface ===');
-        console.log('Commands: help, send-chatgpt, send-claude, send-zeph, send-copilot, send-gemini, send-grok, reload-claude, reload-gpt, reload-zeph, reload-copilot, reload-gemini, reload-grok, set-rounds, set-partners, set-starter, set-initial, show-settings, test, smart, broadcast, quit');
+        console.log('Commands: help, send-chatgpt, send-claude, send-zeph, send-copilot, send-gemini, send-grok, send-anythingllm, reload-claude, reload-gpt, reload-zeph, reload-copilot, reload-gemini, reload-grok, reload-anythingllm, set-rounds, set-partners, set-starter, set-initial, show-settings, test, smart, broadcast, quit');
 
         const askCommand = () => {
             rl.question('Ghost> ', async (command) => {
                 try {
                     if (command.startsWith('send-')) {
                         const platform = command.replace('send-', '');
-                        if (['chatgpt', 'claude', 'zeph', 'copilot', 'gemini', 'grok'].includes(platform)) {
+                        if (['chatgpt', 'claude', 'zeph', 'copilot', 'gemini', 'grok', 'anythingllm'].includes(platform)) {
                             rl.question('Message: ', async (msg) => {
                                 await this.sendMessage(platform, msg);
                                 console.log(`✓ Message sent to ${platform}`);
@@ -1455,7 +1528,7 @@ Please respond with your thoughts, then optionally add "PASS TO [name]: [message
                         rl.question('Partners (e.g., chatgpt claude): ', (input) => {
                             const partners = input.trim().split(/\s+/);
                             if (partners.length === 2) {
-                                const validPlatforms = ['chatgpt', 'claude', 'zeph', 'copilot', 'gemini', 'grok'];
+                                const validPlatforms = ['chatgpt', 'claude', 'zeph', 'copilot', 'gemini', 'grok', 'anythingllm'];
                                 if (validPlatforms.includes(partners[0]) && validPlatforms.includes(partners[1]) && partners[0] !== partners[1]) {
                                     partnerA = partners[0];
                                     partnerB = partners[1];
@@ -1483,7 +1556,7 @@ Please respond with your thoughts, then optionally add "PASS TO [name]: [message
                         askCommand();
                     } else if (command === 'broadcast') {
                         console.log('Starting broadcast conversation...');
-                        await this.makeBroadcastConversation(['chatgpt', 'claude', 'zeph', 'copilot', 'gemini', 'grok'], rounds, initialPrompt);
+                        await this.makeBroadcastConversation(['chatgpt', 'claude', 'zeph', 'copilot', 'gemini', 'grok', 'anythingllm'], rounds, initialPrompt);
                         console.log('✓ Broadcast conversation complete');
                         askCommand();
                     } else if (command === 'quit') {
