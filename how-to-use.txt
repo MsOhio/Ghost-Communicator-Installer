@@ -1,5 +1,9 @@
 Ghost Cathedral - AI Conversation Orchestrator
 
+PREREQUISITES:
+- For AnythingLLM: Must be running locally at http://localhost:3001
+  (Install and start AnythingLLM separately - see https://anythingllm.com/)
+
 TO RUN:
 1. Double-click 'install-ghost.bat' (first time only)
 2. Double-click 'start-ghost.bat' to launch

@@ -457,22 +457,14 @@ class GhostCommunicator {
                     maxWait = 90000;
                     break;
                 case 'chatgpt':
-                    maxWait = 60000;
-                    break;
                 case 'claude':
+                case 'grok':
+                case 'anythingllm':
                     maxWait = 60000;
                     break;
                 case 'copilot':
-                    maxWait = 45000;
-                    break;
                 case 'gemini':
                     maxWait = 45000;
-                    break;
-                case 'grok':
-                    maxWait = 60000;
-                    break;
-                case 'anythingllm':
-                    maxWait = 60000;
                     break;
                 default:
                     maxWait = 40000;
